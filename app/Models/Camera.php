@@ -20,4 +20,8 @@ class Camera extends Model
     {
         return $this->belongsTo(Application::class);
     }
+
+    public function images(){
+        return $this->hasMany(Image::class);
+    }
 }

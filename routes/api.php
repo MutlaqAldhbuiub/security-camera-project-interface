@@ -7,8 +7,13 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Controllers\CameraController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\Settings\PasswordController;
 use App\Http\Controllers\Settings\ProfileController;
+
+use App\Http\Controllers\ApplicationController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,11 +35,26 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::patch('settings/profile', [ProfileController::class, 'update']);
     Route::patch('settings/password', [PasswordController::class, 'update']);
 
-    // applications
-
     // camera
+    Route::get('application/{app_id}/cameras', [CameraController::class, 'index']);
+    Route::post('application/{app_id}/camera', [CameraController::class, 'store']);
+    Route::put('application/{app_id}/camera/{camera_id}', [CameraController::class, 'update']);
+    Route::get('application/{app_id}/camera/{camera_id}', [CameraController::class, 'show']);
+    Route::delete('application/{app_id}/camera/{camera_id}', [CameraController::class, 'destroy']);
+    Route::get('application/{app_id}/camera/{camera_id}/images', [CameraController::class, 'images']);
+
+    // applications
+    Route::get('application', [ApplicationController::class, 'index']);
+    Route::post('application', [ApplicationController::class, 'store']);
+    Route::put('application/{id}', [ApplicationController::class, 'update']);
+    Route::get('application/{id}', [ApplicationController::class, 'show']);
+    Route::delete('application/{id}', [ApplicationController::class, 'destroy']);
 
     // images
+    Route::get('application/{app_id}/camera/{camera_id}/images/{image_id}', [ImageController::class, 'show']);
+    Route::post('application/{app_id}/camera/{camera_id}/images', [ImageController::class, 'store']);
+    Route::put('application/{app_id}/camera/{camera_id}/images/{image_id}', [ImageController::class, 'update']);
+    Route::delete('application/{app_id}/camera/{camera_id}/images/{image_id}', [ImageController::class, 'destroy']);
 
 
 });
