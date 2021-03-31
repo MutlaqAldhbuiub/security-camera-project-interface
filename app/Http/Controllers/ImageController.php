@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Application;
 use App\Models\Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ImageController extends Controller
 {
@@ -41,9 +42,36 @@ class ImageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$app_id,$camera_id)
     {
+        if(!$request->hasFile('image')){
+            return response()->json('image is required',500);
+        }
 
+        $app = Application::find($app_id);
+        if(!$app){
+            return response()->json('App not found',404);
+        }
+
+        $path = $request->file('image')->store('detection');
+        $cam = Application::find($app_id)->cameras->find($camera_id);
+        if($cam){
+            $image = new Image();
+            $image->application_id = $app_id;
+            $image->camera_id = $camera_id;
+            $image->image_name = substr($path,10);
+            $image->image_url = $path;
+            if($image->save()){
+                return response()->json('Image '.$image->image_name.' has been uploaded!!',200);
+            }else{
+                return response()->json('Something went wrong!',500);
+            }
+
+        }else{
+            return response()->json(['No camera found'],404);
+        }
+//        $path = $request->file('image')->store('detection');
+//        return $path;
     }
 
     /**
