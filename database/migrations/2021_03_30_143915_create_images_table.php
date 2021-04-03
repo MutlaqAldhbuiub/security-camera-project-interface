@@ -26,8 +26,8 @@ class CreateImagesTable extends Migration
                 ->onDelete('cascade');
             $table->foreign('camera_id')
                 ->references('id')
-                ->on('cameras');
-
+                ->on('cameras')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

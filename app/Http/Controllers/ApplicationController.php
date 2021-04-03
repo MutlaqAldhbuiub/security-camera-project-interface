@@ -58,7 +58,7 @@ class ApplicationController extends Controller
      */
     public function show(Application $application,$id)
     {
-        $app = Application::find($id)->first();
+        $app = Application::find($id);
         if(!$app){
             return response()->json('Application not found',404);
         }

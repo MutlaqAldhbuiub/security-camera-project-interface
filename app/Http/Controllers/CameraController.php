@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Application;
 use App\Models\Camera;
+use App\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -139,6 +140,23 @@ class CameraController extends Controller
             }else{
                 return response()->json('Something went wrong!',500);
 
+            }
+        }else{
+            return response()->json(['No camera found'],404);
+        }
+    }
+
+
+    public function lastImage($app_id,$camera_id){
+        $app = Application::find($app_id);
+        if(!$app){
+            return response()->json('App not found',404);
+        }
+        $cam = Application::find($app_id)->cameras->find($camera_id);
+        if($cam){
+            $getImage = Image::where(['application_id' => $app_id,'camera_id'=>$camera_id])->latest()->first();
+            if($getImage){
+                return response()->json($getImage,200);
             }
         }else{
             return response()->json(['No camera found'],404);

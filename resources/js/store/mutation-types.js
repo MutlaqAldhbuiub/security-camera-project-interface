@@ -8,3 +8,8 @@ export const UPDATE_USER = 'UPDATE_USER'
 
 // lang.js
 export const SET_LOCALE = 'SET_LOCALE'
+
+// application.js
+export const CREATE_APPLICATION = 'CREATE_APPLICATION'
+export const FETCH_APPLICATIONS = 'FETCH_APPLICATIONS'
+export const DELETE_APPLICATION = 'DELETE_APPLICATION'

@@ -15,7 +15,7 @@ export default {
   name: 'MainLayout',
 
   components: {
-    Navbar
+    Navbar,
   }
 }
 </script>

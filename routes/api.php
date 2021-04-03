@@ -42,21 +42,22 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('application/{app_id}/camera/{camera_id}', [CameraController::class, 'show']);
     Route::delete('application/{app_id}/camera/{camera_id}', [CameraController::class, 'destroy']);
     Route::get('application/{app_id}/camera/{camera_id}/images', [CameraController::class, 'images']);
+    Route::get('application/{app_id}/camera/{camera_id}/images/last', [CameraController::class, 'lastImage']);
 
     // applications
     Route::get('application', [ApplicationController::class, 'index']);
     Route::post('application', [ApplicationController::class, 'store']);
-    Route::put('application/{id}', [ApplicationController::class, 'update']);
     Route::get('application/{id}', [ApplicationController::class, 'show']);
+    Route::put('application/{id}', [ApplicationController::class, 'update']);
     Route::delete('application/{id}', [ApplicationController::class, 'destroy']);
 
     // images
     Route::get('application/{app_id}/camera/{camera_id}/images/{image_id}', [ImageController::class, 'show']);
-    Route::post('application/{app_id}/camera/{camera_id}/images', [ImageController::class, 'store']);
     Route::put('application/{app_id}/camera/{camera_id}/images/{image_id}', [ImageController::class, 'update']);
     Route::delete('application/{app_id}/camera/{camera_id}/images/{image_id}', [ImageController::class, 'destroy']);
 
-
+    // get image
+    Route::get('/images/{folder}/{image}', [ImageController::class, 'getImage']);
 });
 
 Route::group(['middleware' => 'guest:api'], function () {
@@ -71,4 +72,7 @@ Route::group(['middleware' => 'guest:api'], function () {
 
     Route::post('oauth/{driver}', [OAuthController::class, 'redirect']);
     Route::get('oauth/{driver}/callback', [OAuthController::class, 'handleCallback'])->name('oauth.callback');
+
+    Route::post('application/{app_id}/camera/{camera_id}/images', [ImageController::class, 'store']);
+
 });

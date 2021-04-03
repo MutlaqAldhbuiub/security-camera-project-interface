@@ -4,6 +4,8 @@ import Meta from 'vue-meta'
 import routes from './routes'
 import Router from 'vue-router'
 import { sync } from 'vuex-router-sync'
+import VueRouterBackButton from 'vue-router-back-button'
+
 
 Vue.use(Meta)
 Vue.use(Router)
@@ -19,6 +21,7 @@ const routeMiddleware = resolveMiddleware(
 const router = createRouter()
 
 sync(store, router)
+Vue.use(VueRouterBackButton, { router })
 
 export default router
 

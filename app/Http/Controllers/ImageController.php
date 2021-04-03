@@ -53,14 +53,14 @@ class ImageController extends Controller
             return response()->json('App not found',404);
         }
 
-        $path = $request->file('image')->store('detection');
+        $path = $request->file('image')->store('public/detection');
         $cam = Application::find($app_id)->cameras->find($camera_id);
         if($cam){
             $image = new Image();
             $image->application_id = $app_id;
             $image->camera_id = $camera_id;
-            $image->image_name = substr($path,10);
-            $image->image_url = $path;
+            $image->image_name = substr($path,17);
+            $image->image_url = substr($path,7);
             if($image->save()){
                 return response()->json('Image '.$image->image_name.' has been uploaded!!',200);
             }else{
@@ -102,4 +102,19 @@ class ImageController extends Controller
             return response()->json(['No camera found'],404);
         }
     }
+
+    public function getImage($folder,$image){
+
+        $image = Storage::url($folder.'/'.$image);
+//        $image = asset($folder.'/'.$image);
+
+        return $image;
+    }
+
+
+
+    public function camToken($token){
+        // todo:: create token. new model.
+    }
+
 }

@@ -13,6 +13,9 @@ export default [
   { path: '/email/resend', name: 'verification.resend', component: page('auth/verification/resend.vue') },
 
   { path: '/home', name: 'home', component: page('home.vue') },
+  { path: '/application/:id', name: 'application', component: page('application.vue') },
+  { path: '/application/:id/cameras', name: 'cameras', component: page('application.vue') },
+  { path: '/application/:id/camera/:cam', name: 'single.camera', component: page('camera.vue') },
   {
     path: '/settings',
     component: page('settings/index.vue'),

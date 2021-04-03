@@ -11,10 +11,12 @@
 
       <div id="navbarToggler" class="collapse navbar-collapse">
         <ul class="navbar-nav">
-          <locale-dropdown />
-          <!-- <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li> -->
+<!--          <locale-dropdown />-->
+            <router-link
+              v-if="$routerHistory.hasPrevious()"
+              :to="{ path: $routerHistory.previous().path }">
+              GO BACK
+            </router-link>
         </ul>
 
         <ul class="navbar-nav ml-auto">
